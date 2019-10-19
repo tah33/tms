@@ -10,7 +10,7 @@
                     <h3 class="box-title">Update Project Info</h3>
                 </div>
                 <div class="box-body">
-                    <div method='post' action="{{url('projects',$project->id)}}">
+                    <form method='post' action="{{url('projects',$project->id)}}">
                         @csrf
                         <div class="form-group">
                             <input id="title" type="text" class="form-control @error('title') is-invalid @enderror"
@@ -87,9 +87,9 @@
 
                             <button type="submit" class="btn btn-success" style="margin-top:10px">Update</button>
                             <a class="btn btn-warning" style="margin-top:10px" href="{{url('projects')}}">Cancel</a>
-                    </div>
-    </form>
+                    </form>
     </div>
     </div>
+        </div>
 @endsection
 

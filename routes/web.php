@@ -21,6 +21,7 @@ Route::post('save-permissions/{id}','PermissionController@store');
 Route::Resource('teams','TeamController')->except('delete');
 Route::get('delete-teams/{id}','TeamController@destroy');
 Route::get('leader/{id}','TeamController@leader');
+Route::get('team_details/{id}','TeamController@team');
 //Member Controller
 Route::Resource('members','MemberController')->except('store','create','destroy');
 Route::get('delete-member/{id}','MemberController@destroy');
@@ -39,6 +40,7 @@ Route::get('delete-task/{id}','TaskController@destroy');
 Route::post('save-task/{id}','TaskController@store');
 Route::get('progress/{id}','TaskController@progress');
 Route::get('task-files/{id}', 'TaskController@download');
+Route::get('delete-file/{id}', 'TaskController@file');
 //SuperController
 Route::get('user_list','SuperController@userList');
 Route::get('project_list','SuperController@projectList');

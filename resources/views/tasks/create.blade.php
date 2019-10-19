@@ -3,7 +3,11 @@
     <div class="col-md-6">
         <div class="box box-primary">
             <div class="box-header">
+
+                <h3 class="box-title">Assign Task</h3>
+
                 <h3 class="box-title">Assign Project</h3>
+
             </div>
             <div class="box-body">
                 <form method="post" action="{{url('save-task',$project->id)}}" enctype="multipart/form-data">

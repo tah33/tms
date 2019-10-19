@@ -7,6 +7,7 @@ use App\Role;
 use App\Team;
 use App\User;
 use DB;
+use Auth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -44,8 +45,10 @@ class MemberController extends Controller
     public function store(Request $request,$id)
     {
         $team=Team::find($id);
-        $team->users()->attach($request->id);
-        return redirect('teams/'.$id);
+        $team->users()->attach($request->input('id'));
+        if(! Auth::user()->hasRole('member'))
+            return redirect('teams/'.$id);
+        return redirect('home');
     }
 
     /**
@@ -65,7 +68,7 @@ class MemberController extends Controller
      * @param  \App\Member  $member
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    /*public function edit($id)
     {
         $team=Team::find($id);
         foreach ($team->members as $key => $member)
@@ -73,7 +76,7 @@ class MemberController extends Controller
             $teamlist[]=$member;
         }
         return view('members.edit',compact('team','teamlist'));
-    }
+    }*/
 
     /**
      * Update the specified resource in storage.
@@ -95,8 +98,8 @@ class MemberController extends Controller
      */
     public function destroy($id)
     {
-        $team=User::find($id);
-        $team->teams()->detach();
+        $user=User::find($id);
+        $user->teams()->detach();
         /*if($team) {
             $team->leader_id = null;
             $team->save();

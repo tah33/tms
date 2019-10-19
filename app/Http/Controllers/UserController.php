@@ -96,7 +96,8 @@ class UserController extends Controller
         $this->validate($request, [
             'name' => 'required',
             'email' => 'required|email',
-            'username' => "required"
+            'username' => "required",
+            'password' => 'confirmed|min:6',
         ]);
         $user = User::find($id);
         $user->name = $request->name;

@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Team;
 use App\User;
 use App\Role;
-use App\Member;
 use App\Project;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -113,7 +112,7 @@ class TeamController extends Controller
         $this->authorize('delete', Team::class);
         $team=Team::find($id);
        // $team->project()->delete();
-        $team->members()->delete();
+        $team->users()->detach();
         $team->delete();
         return back();
     }
@@ -125,5 +124,13 @@ class TeamController extends Controller
         $team->leader_id=$id;
         $team->save();
         return back();
+    }
+    public function team($id)
+    {
+        $team=Team::find($id);
+        $project='';
+        if($team->projects()->exists())
+            $project=Project::where('team_id','$team->id')->first();
+        return view('leader.team-details',compact('team','project'));
     }
 }

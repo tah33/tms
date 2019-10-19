@@ -6,6 +6,7 @@ use App\Task;
 use App\Team;
 use App\Project;
 use App\User;
+use DB;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -18,7 +19,9 @@ class TaskController extends Controller
      */
     public function index()
     {
-            $tasks = Task::all();
+            $tasks = DB::table('users')
+                ->join('tasks','users.id','tasks.member_id')
+                ->get();
             return view('tasks.index', compact('tasks'));
     }
 
@@ -65,6 +68,7 @@ class TaskController extends Controller
         $task->submit=$request->submit;
         $task->progress=0;
         $project->tasks()->save($task);
+        return redirect('home');
         return back();
     }
 
@@ -77,7 +81,6 @@ class TaskController extends Controller
     public function show($id)
     {
         $task=Task::find($id);
-        $team=$task->project;
         return view('tasks.show',compact('task'));
     }
 
@@ -103,24 +106,24 @@ class TaskController extends Controller
     public function update(Request $request, $id)
     {
           $request->validate([
-           // 'member_name' => 'required|unique:tasks,member_name,'.$id,
             'module' => 'required_without:file',
             'file' => 'required_without:module'
         ]);
         $task = Task::find($id);
         $project=$task->project_id;
-        $task->member_name = $request->member_name;
+        $task->member_id = $request->member_id;
         $task->module = $request->module;
-        if ($request->file)
+        $task->project_id = $project;
+        $task->submit = $request->submit;
+        if ($request->hasfile('file'))
         {
-            $file=$request->File('file');
-            $ext=$file->getClientOriginalExtension();
-            $filename=time() . '.' . $ext;
-            $file->move('public/members/',$filename);
-            $task->image=$filename;
+            $ext = $request->file->getClientOriginalName();
+            $filename=$request->module.".".$ext;
+            $request->file->move(public_path() . '/members/', $filename);
+            $task->file = $filename;
         }
-        $task->project()->associate($project)->save();
-        return redirect('tasks');
+        $task->save();
+        return redirect('home');
     }
 
     /**
@@ -137,7 +140,7 @@ class TaskController extends Controller
     public function progress($id)
     {
         $task=Task::find($id);
-        $task->progress="Complete";
+        $task->progress=1;
         $task->save();
         return back();
     }
@@ -145,5 +148,11 @@ class TaskController extends Controller
         $file = Task::find($id);
         $path = public_path() . '/members/'.$file->file;
         return response()->download($path);
+    }
+    public function file($id){
+        $task = Task::find($id);
+        $task->file = null;
+        $task->save();
+        return back();
     }
 }

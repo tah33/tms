@@ -18,7 +18,7 @@ class ProfileController extends Controller
 
     public function edit($id)
     {
-        $user=User::with('roles')->find($id);
+        $user=User::find($id);
         return view('profiles.edit',compact('user'));
     }
     /**
@@ -33,7 +33,8 @@ class ProfileController extends Controller
         $request->validate([
             'name'=>'required',
             'username'=>'required|unique:users,username,'.$id,
-            'email'=>'required|unique:users,email,'.$id
+            'email'=>'required|unique:users,email,'.$id,
+            'password' => 'nullable|confirmed|min:6',
         ]);
         $user = User::find($id);
         $user->name = $request->name;
@@ -43,11 +44,14 @@ class ProfileController extends Controller
             $file=$request->File('image');
             $ext=$file->getClientOriginalExtension();
             $filename=time() . '.' . $ext;
-            $file->move('public/images/',$filename);
-            $$user->image=$filename;
+            $file->move('images/',$filename);
+            $user->image=$filename;
+        }
+        if($request->password){
+            $user->password = bcrypt($request->password);
         }
         $user->save();
-        return back();
+        return redirect('home');
     }
      public function verify(Request $request)
     {
@@ -103,11 +107,35 @@ class ProfileController extends Controller
         }
         elseif (Auth::user()->hasRole('member'))
         {
-            $team = Team::has('projects')->whereHas('users', function ($query) {
-                $query->where('username', Auth::user()->username);
-            })->first();
-                if(!empty($team->leader_id))
+
+            $team=$task=$tasks=$project='';
+           /* $team = Team::has('projects')/*->whereHas('users', function ($query) {
+                $query->where('email', Auth::user()->email);
+            })->first();*/
+           $team=Team::whereHas('users', function ($query) {
+               $query->where('email', Auth::user()->email);
+           })->first();
+            $task=Task::where('member_id',Auth::user())->latest()->first();
+            if($team)
+                $project=Project::where('team_id',$team->id)->latest()->first();
+            if(!empty($team->leader_id))
                 {
+                    $memberlist=$progress=[];
+                    if(!empty($project)) {
+                        if ($project->tasks()->exists()) {
+                            $tasks = Task::select('users.email', 'tasks.*')
+                                ->join('users', 'tasks.member_id', 'users.id')
+                                ->join('projects', 'tasks.project_id', 'projects.id')
+                                ->where('projects.id', $project->id)->latest()->get();
+                            foreach ($tasks as $task) {
+                                $memberlist[] = $task->member_id;
+                                $progress[] = $task->progress;
+                            }
+                        }
+                    }
+                    if($team->leader_id == Auth::id())
+                        return view('leader.home',compact('team','project','memberlist','tasks','progress'));
+/*
                     $tasklist=[];
                   $project=Project::where('team_id',$team->id)->latest()->first();
                   if($project->tasks()->exists())
@@ -119,9 +147,9 @@ class ProfileController extends Controller
                       }
                   }
                     if($team->leader_id == Auth::id())
-                        return view('leader.home',compact('team','project','tasklist'));
+                        return view('leader.home',compact('team','project','tasklist'));*/
                 }
-            return view('members.home',compact('member'));
+            return view('members.home',compact('project','team','task'));
         }
     }
 
