@@ -126,12 +126,4 @@ class TeamController extends Controller
         $team->save();
         return back();
     }
-    public function team($id)
-    {
-        $team=Team::find($id);
-        $project='';
-        if($team->projects()->exists())
-            $project=Project::where('team_id','$team->id')->first();
-        return view('leader.team-details',compact('team','project'));
-    }
 }

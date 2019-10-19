@@ -50,7 +50,7 @@ class ProjectController extends Controller
         $this->validate($request, [
             'title' => 'required|unique:projects,title',
             'requirements' => 'required_without:file',
-            'filename' => 'required_without:requirements|unique:unique:files,filename',
+            'filename' => 'required_without:requirements',
             'submission_date'=>"required|date|after_or_equal:tomorrow"
         ]);
         $team=Team::find($id);
@@ -110,7 +110,7 @@ class ProjectController extends Controller
     {
         {
             $request->validate([
-                'title' => 'required|unique:projects,title,'.$id,
+                'title' => 'required|unique:projects,title', Rule::unique('projects')->ignore($id),
                 'requirements' => 'required_without:file',
                 'filename' => 'required_without:requirements',
                 'submission_date'=>'required|date|after_or_equal:tomorrow'
@@ -150,10 +150,8 @@ class ProjectController extends Controller
     {
         $this->authorize('delete', Project::class);
         $project=Project::find($id);
-        if($project->files()->exists());
-            $project->files()->delete();
-        if($project->tasks()->exists())
-            $project->tasks()->delete();
+        //$project->tasks()->delete();
+        //$project->files()->delete();
         $project->delete();
         return back();
     }

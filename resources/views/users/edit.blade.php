@@ -51,10 +51,6 @@
                         @enderror
                     </div>
                     <div class="form-group">
-                        <input id="password-confirm" type="password" class="form-control" name="password_confirmation" placeholder="Confirm Password...">
-                    </div>
-
-                    <div class="form-group">
 
                         <button type="submit" class="btn btn-primary">
                             {{ __('Save') }}

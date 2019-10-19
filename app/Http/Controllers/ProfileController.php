@@ -103,24 +103,23 @@ class ProfileController extends Controller
         }
         elseif (Auth::user()->hasRole('member'))
         {
-            /*$member=DB::table('users')
-                ->join('members','users.id','members.member_id')
-                ->join('teams','members.team_id','teams.teams_id')
-                ->leftjoin('projects','teams.teams_id','projects.team_id')
-                ->leftjoin('tasks','projects.projects_id','tasks.project_id')
-                ->select('teams.*','users.email','members.*','projects.*','tasks.*')
-                ->where('users.id',Auth::id())
-                ->orderBy('projects.projects_id','desc')
-                ->orderBy('tasks.tasks_id','desc')
-                ->first();*/
             $team = Team::has('projects')->whereHas('users', function ($query) {
                 $query->where('username', Auth::user()->username);
             })->first();
                 if(!empty($team->leader_id))
                 {
+                    $tasklist=[];
                   $project=Project::where('team_id',$team->id)->latest()->first();
+                  if($project->tasks()->exists())
+                  {
+                      $tasks=Task::where('project_id',$project->id)->get();
+                      foreach($tasks as $task)
+                      {
+                          $tasklist[]=$task->member_id;
+                      }
+                  }
                     if($team->leader_id == Auth::id())
-                        return view('leader.home',compact('team','project'));
+                        return view('leader.home',compact('team','project','tasklist'));
                 }
             return view('members.home',compact('member'));
         }

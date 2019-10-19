@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Task;
-use App\Member;
+use App\Team;
 use App\Project;
+use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -28,10 +29,10 @@ class TaskController extends Controller
      */
     public function create($id)
     {
-        $project=Project::find($id);
-        $members=Member::where('team_id',$project->team_id)->get();
-        $team=Team::where('leader',$member->id)->first();
-        return view('tasks.create',compact('project','members','team'));
+        $user=User::find($id);
+        $team=Team::where('id',$user->teams->first()->id)->first();
+        $project=Project::where('team_id',$team->id)->latest()->first();
+        return view('tasks.create',compact('user','team','project'));
     }
 
     /**
@@ -43,9 +44,9 @@ class TaskController extends Controller
     public function store(Request $request,$id)
     {
         $request->validate([
-            'member_name' => 'required|unique:tasks',
             'module' => 'required_without:file',
-            'file' => 'required_without:module'
+            'file' => 'required_without:module',
+            'submit'=>"required|date|after_or_equal:tomorrow"
         ]);
         $project=Project::find($id);
         $task = new Task;
@@ -60,9 +61,11 @@ class TaskController extends Controller
         {
             $task->module=$request->module;
         }
-        $task->member_name=$request->member_name;
+        $task->member_id=$request->member_id;
+        $task->submit=$request->submit;
+        $task->progress=0;
         $project->tasks()->save($task);
-        return redirect('tasks');
+        return back();
     }
 
     /**

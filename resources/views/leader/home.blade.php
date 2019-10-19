@@ -73,11 +73,11 @@
                         <td style="text-align: center">{{ $key+1 }}</td>
                         <td style="text-align: center">{{ $user->name }}</td>
                         <td style="text-align: center">{{ $user->email }}</td>
-                            <td style="text-align: center">
-                                <a href="{{url('status',$user->id)}}"
-                                   class="btn btn-primary"
-                                   onclick="return confirm('Are You Sure! You want to Submit?')">Distribute Task</a>
-                            </td>
+                        @if(!in_array($user->id,$tasklist))  <td style="text-align: center">
+
+                                <a href="{{url('add-task',$user->id)}}"
+                                   class="btn btn-primary">Distribute Task</a>
+                            </td> @endif
                     </tr>
                         @endforeach
                     </tbody>
