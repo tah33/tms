@@ -85,12 +85,19 @@ class FileController extends Controller
 
     public function delete($id)
     {
-        $file = File::destroy($id);
+        $file = File::find($id);
+        unlink('files/'.$file->filename);
+        $file->delete();
         return back();
     }
     public function download($id){
         $file = File::find($id);
-        $path = public_path() . '/images/'.$file->filename;
+        $path = public_path() . '/files/'.$file->filename;
         return response()->download($path);
+    }
+    public function view($id){
+        $file = File::find($id);
+        $path = public_path() . '/files/'.$file->filename;
+        return response()->file($path);
     }
 }
