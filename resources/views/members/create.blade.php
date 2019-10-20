@@ -1,19 +1,17 @@
 @extends('layouts.app')
 @section('content')
-    <form action="{{url('save-member',$team->id)}}" method="post" accept-charset="utf-8">
-        @csrf
-        <div class="form-group row">
-            <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Select Member/s') }}</label>
-            <div class="col-md-6">
-                @foreach($users as $key => $user)
-                    <input type="checkbox" name="id[]" value="{{$user->id}}">{{$user->email}}<br>
-                @endforeach
-                @error('member_id')
-                <span class="invalid-feedback" role="alert"><strong><font
-                            color="red">{{ $message }}</font></strong></span>
-                @enderror
-            </div>
-        </div>
-        <button type="submit" class="btn btn-primary">Save</button>
-    </form>
+    <div class="col-md-6">
+    <div class="form-group">
+        <label>Multiple</label>
+        <select class="form-control select2" multiple="multiple" data-placeholder="Select a State">
+            <option>Alabama</option>
+            <option>Alaska</option>
+            <option>California</option>
+            <option>Delaware</option>
+            <option>Tennessee</option>
+            <option>Texas</option>
+            <option>Washington</option>
+        </select>
+    </div>
+    </div>
 @endsection
