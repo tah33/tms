@@ -53,6 +53,8 @@ class UserController extends Controller
             'username' => $request->username,
             'password' => bcrypt($request->password),
         ]);
+        $role=Role::where('name','member')->first();
+        $user->roles()->attach($role);
         return redirect('users');
     }
     /**
