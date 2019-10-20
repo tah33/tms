@@ -52,8 +52,6 @@
               </li>
             </ul>
           </li>
-
-
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               @if(Auth::user()->image == "")
@@ -66,11 +64,11 @@
             <ul class="dropdown-menu">
               <!-- User image -->
               <li class="user-header">
-                @if(Auth::user()->image == "")
-              <img src="{{asset('images/avatar.png')}}" class="user-image">
-              @else
-              <img src="{{asset('images/'.Auth::user()->image)}}" class="user-image">
-              @endif
+                  @if(Auth::user()->image =='')
+                      <img src="{{asset('images/avatar.png')}}" class="img-circle">
+                  @else
+                      <img src="{{asset('images/'.Auth::user()->image)}}" class="img-circle">
+                  @endif
                 <p>
                  <br> {{Auth::user()->name}}
                   <small>Member since {{Auth::user()->created_at->diffForHumans()}}</small>
@@ -79,7 +77,7 @@
               <!-- Menu Footer-->
               <li class="user-footer">
                 <div class="pull-left">
-                  <a href="{{url('profiles',Auth::user()->id.'/edit')}}" class="btn btn-default btn-flat">Profile</a>
+                  <a href="{{url('profiles',Auth::user()->id)}}" class="btn btn-default btn-flat">Profile</a>
                 </div>
                 <div class="pull-right">
                   <a href="{{url('logout')}}" class="btn btn-default btn-flat">Logout</a>

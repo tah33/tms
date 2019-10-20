@@ -9,6 +9,7 @@
                     <tr>
                         <th style="text-align: center">No.</th>
                         <th style="text-align: center">Name</th>
+                        <th style="text-align: center">Role</th>
                         <th style="text-align: center">Action</th>
                     </tr>
                     </thead>
@@ -17,6 +18,7 @@
                         <tr>
                             <td style="text-align: center">{{ $key+1 }}</td>
                             <td style="text-align: center">{{ $user->email }}</td>
+                            <td style="text-align: center">{{ $user->roles->first()->rolename }}</td>
                             <td style="text-align: center">
                                 @can('view',App\User::class)
                                 <a href="{{url('users',$user->id)}}" class="btn btn-success"><i

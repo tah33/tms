@@ -1,41 +1,23 @@
 @extends('layouts.app')
 @section('content')
     <center>
-        <div class="card" style="width: 18rem;">@if(Auth::user()->image =='')
-                <img class="card-img-top" width="100%" src="{{asset('images/avatar.png')}}" class="img-circle">
-            @else
-                <img class="card-img-top" width="100%" src="{{asset('images/'.Auth::user()->image)}}" class="img-circle">
-            @endif
- <div class="row">
-                 <div class="box">
-<div class="box-body">
-                <table>
-                    <tr>
-                        <td>Name</td>
-                        <td>:</td>
-                        <td> {{$user->name}}</td>
-                    </tr>
-
-                    <tr>
-                        <td>Email</td>
-                        <td>:</td>
-                        <td> {{$user->email}}</td>
-                    </tr>
-                    <tr>
-                        <td>Username</td>
-                        <td>:</td>
-                        <td> {{$user->username}}</td>
-                    </tr>
-
-                    @if($user->roles()->exists())
-                        <tr>
-                            <td>Role</td>
-                            <td>:</td>
-                            <td> {{$user->roles->first()->rolename}}</td>
-                        </tr>
-                    @endif
-                </table>
-                  </div>
-        </div></div></div>
+    <div class="card" style="width: 18rem;">
+        @if($user->image =='')
+            <img class="card-img-top" width="100%" src="{{asset('images/avatar.png')}}" class="img-circle">
+        @else
+            <img class="card-img-top" width="100%" src="{{asset('images/'.$user->image)}}" class="img-circle">
+        @endif
+        <div class="card-body">
+            <h5 class="card-title">{{$user->name}} Profile</h5>
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">Name : {{$user->name}}</li>
+            <li class="list-group-item">Email : {{$user->email}}</li>
+            <li class="list-group-item">UserName : {{$user->username}}</li>
+        </ul>
+        <div class="card-body">
+            <a href="{{url('users/'.$user->id.'/edit')}}" class="btn btn-primary">Edit Profile</a>
+        </div>
+    </div>
     </center>
 @endsection

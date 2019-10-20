@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
 use App\User;
-use App\Member;
 use App\Team;
 use App\Task;
 use App\Project;
@@ -15,7 +15,11 @@ use Carbon;
 use DB;
 class ProfileController extends Controller
 {
-
+    public function show($id)
+    {
+        $user=User::find($id);
+        return view('profiles.show',compact('user'));
+    }
     public function edit($id)
     {
         $user=User::find($id);
@@ -35,6 +39,7 @@ class ProfileController extends Controller
             'username'=>'required|unique:users,username,'.$id,
             'email'=>'required|unique:users,email,'.$id,
             'password' => 'nullable|confirmed|min:6',
+            'old' => 'required_with:password',
         ]);
         $user = User::find($id);
         $user->name = $request->name;
@@ -43,19 +48,24 @@ class ProfileController extends Controller
         if ($request->image) {
             $file=$request->File('image');
             $ext=$file->getClientOriginalExtension();
-            $filename=time() . '.' . $ext;
+            $filename=$user->username . '.' . $ext;
+            unlink('images/'.$user->image);
             $file->move('images/',$filename);
             $user->image=$filename;
         }
         if($request->password){
-            $user->password = bcrypt($request->password);
+            $password=$request->old;
+            if (Hash::check($request->old, $user->password)) {
+                $user->password = bcrypt($request->password);
+            }
+            else
+                return redirect()->back()->with("error","your current password does not match with the password you provided. please try again.");
         }
         $user->save();
         return redirect('home');
     }
      public function verify(Request $request)
     {
-
         $email=Auth::attempt(['email' => $request->login, 'password' => $request->password]);
         $username=Auth::attempt(['username' => $request->login, 'password' => $request->password]);
         if($username || $email)
@@ -70,7 +80,6 @@ class ProfileController extends Controller
         {
             return back()->with('msg', 'Error!Enter Cedentials Correctly');
         }
-
     }
     public function logout()
     {
@@ -105,51 +114,32 @@ class ProfileController extends Controller
             $projects=Project::all();
             return view('admin.home',compact('teams','projects','incomplete'));
         }
-        elseif (Auth::user()->hasRole('member'))
-        {
-
-            $team=$task=$tasks=$project='';
-           /* $team = Team::has('projects')/*->whereHas('users', function ($query) {
+        elseif (Auth::user()->hasRole('member')) {
+            $team = $task = $tasks = $project = '';
+            $team = Team::whereHas('users', function ($query) {
                 $query->where('email', Auth::user()->email);
-            })->first();*/
-           $team=Team::whereHas('users', function ($query) {
-               $query->where('email', Auth::user()->email);
-           })->first();
-            $task=Task::where('member_id',Auth::user())->latest()->first();
-            if($team)
-                $project=Project::where('team_id',$team->id)->latest()->first();
-            if(!empty($team->leader_id))
-                {
-                    $memberlist=$progress=[];
-                    if(!empty($project)) {
-                        if ($project->tasks()->exists()) {
-                            $tasks = Task::select('users.email', 'tasks.*')
-                                ->join('users', 'tasks.member_id', 'users.id')
-                                ->join('projects', 'tasks.project_id', 'projects.id')
-                                ->where('projects.id', $project->id)->latest()->get();
-                            foreach ($tasks as $task) {
-                                $memberlist[] = $task->member_id;
-                                $progress[] = $task->progress;
-                            }
+            })->first();
+            $task = Task::where('member_id', Auth::user())->latest()->first();
+            if ($team)
+                $project = Project::where('team_id', $team->id)->latest()->first();
+            if (!empty($team->leader_id)) {
+                $memberlist = $progress = [];
+                if (!empty($project)) {
+                    if ($project->tasks()->exists()) {
+                        $tasks = Task::select('users.email', 'tasks.*')
+                            ->join('users', 'tasks.member_id', 'users.id')
+                            ->join('projects', 'tasks.project_id', 'projects.id')
+                            ->where('projects.id', $project->id)->latest()->get();
+                        foreach ($tasks as $task) {
+                            $memberlist[] = $task->member_id;
+                            $progress[] = $task->progress;
                         }
                     }
-                    if($team->leader_id == Auth::id())
-                        return view('leader.home',compact('team','project','memberlist','tasks','progress'));
-/*
-                    $tasklist=[];
-                  $project=Project::where('team_id',$team->id)->latest()->first();
-                  if($project->tasks()->exists())
-                  {
-                      $tasks=Task::where('project_id',$project->id)->get();
-                      foreach($tasks as $task)
-                      {
-                          $tasklist[]=$task->member_id;
-                      }
-                  }
-                    if($team->leader_id == Auth::id())
-                        return view('leader.home',compact('team','project','tasklist'));*/
                 }
-            return view('members.home',compact('project','team','task'));
+                if ($team->leader_id == Auth::id())
+                    return view('leader.home', compact('team', 'project', 'memberlist', 'tasks', 'progress'));
+                return view('members.home', compact('project', 'team', 'task'));
+            }
         }
     }
 

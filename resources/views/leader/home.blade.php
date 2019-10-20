@@ -40,7 +40,8 @@
                                 @else
                                     No files Are Added
                                 @endif
-                            </td>@if($project->status != 1 || empty($project->status))
+                            </td>
+                            @if($project->status != 1 || empty($project->status))
                                 @if (array_unique($progress) === array(1)) {
                                 <td style="text-align: center">
                                     <a href="{{url('status',$project->id)}}"

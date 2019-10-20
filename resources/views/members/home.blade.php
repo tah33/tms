@@ -38,7 +38,7 @@
             </div>
         </div>
         @if(!empty($project))
-        @if(!($project->tasks()->exists()))
+        @if(($project->tasks()->exists()))
             <div class="row">
                 <div class="box">
                     <div class="box-body">

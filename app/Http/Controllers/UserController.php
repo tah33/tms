@@ -23,7 +23,6 @@ class UserController extends Controller
         $users = User::all()->except(1);
        return view('users.index', compact('users'));
     }
-
     /**
      * Show the form for creating a new resource.
      *
@@ -34,7 +33,6 @@ class UserController extends Controller
         $this->authorize('create', User::class);
         return view('users.create');
     }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -57,7 +55,6 @@ class UserController extends Controller
         ]);
         return redirect('users');
     }
-
     /**
      * Display the specified resource.
      *
@@ -83,7 +80,6 @@ class UserController extends Controller
         $user = User::find($id);
         return view('users.edit', compact('user'));
     }
-
     /**
      * Update the specified resource in storage.
      *
@@ -97,7 +93,7 @@ class UserController extends Controller
             'name' => 'required',
             'email' => 'required|email',
             'username' => "required",
-            'password' => 'confirmed|min:6',
+            'password' => 'nullable|confirmed|min:6',
         ]);
         $user = User::find($id);
         $user->name = $request->name;
@@ -109,7 +105,6 @@ class UserController extends Controller
         $user->save();
         return redirect('users');
     }
-
     /**
      * Remove the specified resource from storage.
      *

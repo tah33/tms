@@ -26,7 +26,6 @@ class ProjectController extends Controller
         return view('projects.index', compact('projects'));
 
     }
-
     /**
      * Show the form for creating a new resource.
      *
@@ -38,7 +37,6 @@ class ProjectController extends Controller
         $team=Team::find($id);
         return view('projects.create',compact('team'));
     }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -98,7 +96,6 @@ class ProjectController extends Controller
         $project = Project::find($id);
         return view('projects.edit', compact('project'));
     }
-
     /**
      * Update the specified resource in storage.
      *

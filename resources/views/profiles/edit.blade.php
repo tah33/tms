@@ -37,12 +37,20 @@
                             <input id="username" type="text"
                                    class="form-control @error('username') is-invalid @enderror"
                                    name="username" value="{{ $user->username }}" autocomplete="requirements">
-
                             @error('username')
                             <span class="invalid-feedback" role="alert">
                                         <strong><font color="red">{{ $message }}</font></strong>
                                     </span>
                             @enderror
+                        </div>
+                        <div class="form-group">
+                            <input id="old-password" type="password" class="form-control" name="old" placeholder="Old Password...">
+                            @error('old')
+                            <span class="invalid-feedback" role="alert">
+                                        <strong><font color="red">{{ $message }}</font></strong>
+                                    </span>
+                            @enderror
+                        <font color="red">{{Session::get('error')}}</font>
                         </div>
                         <div class="form-group">
                             <input id="password" type="password"
@@ -57,13 +65,12 @@
                         <div class="form-group">
                             <input id="password-confirm" type="password" class="form-control" name="password_confirmation" placeholder="Confirm Password...">
                         </div>
-
                         <div class="col-lg-12 input-group control-group increment">
-                            <input type="file" name="filenames[]"
-                                   class="form-control @error('file') is-invalid @enderror" accept="image/*">
+                            <input type="file" name="image"
+                                   class="form-control @error('image') is-invalid @enderror" accept="image/*">
 
                         </div>
-                        @error('file')
+                        @error('image')
                         <span class="invalid-feedback" role="alert">
                                         <strong><font color="red">{{ $message }}</font></strong>
                                     </span>
