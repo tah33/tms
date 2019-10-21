@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>AdminLTE 2 | Advanced form elements</title>
+    <title>TMS</title>
+    <link rel="shortcut icon" href="{{ asset('favicon.jpg') }}">
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.7 -->
@@ -10,16 +11,10 @@
     <link rel="stylesheet" href="../../bower_components/font-awesome/css/font-awesome.min.css">
     <!-- Ionicons -->
     <link rel="stylesheet" href="../../bower_components/Ionicons/css/ionicons.min.css">
-    <!-- daterange picker -->
-    <link rel="stylesheet" href="../../bower_components/bootstrap-daterangepicker/daterangepicker.css">
     <!-- bootstrap datepicker -->
     <link rel="stylesheet" href="../../bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
-    <!-- iCheck for checkboxes and radio inputs -->
-    <link rel="stylesheet" href="../../plugins/iCheck/all.css">
     <!-- Bootstrap Color Picker -->
     <link rel="stylesheet" href="../../bower_components/bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css">
-    <!-- Bootstrap time Picker -->
-    <link rel="stylesheet" href="../../plugins/timepicker/bootstrap-timepicker.min.css">
     <!-- Select2 -->
     <link rel="stylesheet" href="../../bower_components/select2/dist/css/select2.min.css">
     <!-- Theme style -->
@@ -27,14 +22,12 @@
     <!-- AdminLTE Skins. Choose a skin from the css/skins
          folder instead of downloading all of them to reduce the load. -->
     <link rel="stylesheet" href="../../dist/css/skins/_all-skins.min.css">
-
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
-
     <!-- Google Font -->
     <link rel="stylesheet"
           href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
@@ -138,7 +131,7 @@
                         @endcan
                         @can('viewAny', App\User::class)
                             <li>
-                                <a href="{{url('users')}}"><i class="fa fa-eye"></i> View Registered Users</a></li>
+                                <a href="{{url('users')}}"><i class="fa fa-users"></i> View Registered Users</a></li>
                     </ul>
             @endcan
             @if(Auth::user()->hasRole('super admin'))
@@ -173,7 +166,7 @@
                 </li>
                 @if(!Auth::user()->hasRole('member'))
                 @can('viewAny', App\Project::class)
-                    <li><a href="{{url('projects')}}"><i style="font-size:15px" class="material-icons">assignment_turned_in</i><span>Projects</span></a></li>
+                    <li><a href="{{url('projects')}}"><i style="font-size:15px" class="fa fa-check"></i><span>Projects</span></a></li>
                 @endcan
                 <li><a href="{{url('tasks')}}"><i class="glyphicon glyphicon-tasks"></i> <span>Tasks</span></a></li>
                 @endif
