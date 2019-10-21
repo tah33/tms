@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Project;
+use App\Task;
 use App\Team;
 use App\Member;
 use App\File;
@@ -63,7 +64,7 @@ class ProjectController extends Controller
         if($files) {
             foreach ($files as $u_file) {
                 $name=$u_file->getClientOriginalName();
-                $u_file->move(public_path().'/images/', $name);
+                $u_file->move(public_path().'/files/', $name);
                 $project_file = new File();
                 $project_file->filename = $name;
                 $project->files()->save($project_file);
@@ -79,9 +80,11 @@ class ProjectController extends Controller
      */
     public function show($id)
     {
-        $this->authorize('view', Project::class);
+        //$this->authorize('view', Project::class);
         $project=Project::find($id);
-      return view('projects.show',compact('project'));
+        $tasks=Task::select('tasks.*','users.username')
+            ->join('users','tasks.member_id','users.id')->get();
+      return view('projects.show',compact('project','tasks'));
     }
 
     /**
@@ -126,8 +129,8 @@ class ProjectController extends Controller
                     $project_file =File::where('project_id', $id)->get();
                     foreach ($files as $file) {
                         $name=$file->getClientOriginalName();
-                        $file->move(public_path().'/images/', $name);
-                        $path = public_path()."/images/".$name;
+                        $file->move(public_path().'/files/', $name);
+                        $path = public_path()."/files/".$name;
                         $project_fi = new File();
                         $project_fi->filename = $name;
                         $project->files()->save($project_fi);

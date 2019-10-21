@@ -22,12 +22,10 @@
                                     </span>
                             @enderror
                         </div>
-
                         <div class="form-group">
-                            <input id="requirements" type="text"
-                                   class="form-control @error('requirements') is-invalid @enderror"
-                                   name="requirements" value="{{ $project->requirements }}" autocomplete="requirements">
-
+                                <textarea placeholder="Project Requirements" id="requirements" onKeyPress class="form-control"
+                                          class="form-control @error('requirements') is-invalid @enderror"
+                                          name="requirements" autocomplete=requirements>{{ $project->requirements }}</textarea>
                             @error('requirements')
                             <span class="invalid-feedback" role="alert">
                                         <strong><font color="red">{{ $message }}</font></strong>

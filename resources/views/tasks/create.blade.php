@@ -26,6 +26,16 @@
                         @enderror
                     </div>
                     <div class="form-group">
+                        <textarea placeholder="Module Description" id="description" onKeyPress class="form-control"
+                                  class="form-control @error('description') is-invalid @enderror"
+                                  name="description" autocomplete=description></textarea>
+                        @error('description')
+                        <span class="invalid-feedback" role="alert">
+                                        <strong><font color="red">{{ $message }}</font></strong>
+                                    </span>
+                        @enderror
+                    </div>
+                    <div class="form-group">
                         <input type="date" name="submit"
                                class="form-control @error('submit') is-invalid @enderror">
                         @error('submit')

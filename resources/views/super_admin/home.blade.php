@@ -25,7 +25,7 @@
                 <p>Total Teams</p>
               </div>
               <div class="icon">
-                <img src="{{asset('group.png')}}" width="70px" height="70px">
+                <img src="{{asset('public/group.png')}}" width="70px" height="70px">
               </div>
               <a href="{{url('team_list')}}" class="small-box-footer">More info <i class="glyphicon glyphicon-chevron-right"></i></a>
             </div>
@@ -39,7 +39,7 @@
                 <p>Total Projects</p>
               </div>
               <div class="icon">
-                <img src="{{asset('project.svg')}}" width="70px" height="70px">
+                <img src="{{asset('public/project.svg')}}" width="70px" height="70px">
               </div>
               <a href="{{url('project_list')}}" class="small-box-footer">More info <i class="glyphicon glyphicon-chevron-right"></i></a>
             </div>
@@ -53,7 +53,7 @@
                 <p>Ongoing Projects</p>
               </div>
               <div class="icon">
-                <img src="{{asset('incomplete.svg')}}" width="70px" height="70px">
+                <img src="{{asset('public/incomplete.svg')}}" width="70px" height="70px">
               </div>
               <a href="{{url('incomplete')}}" class="small-box-footer">More info <i class="glyphicon glyphicon-chevron-right"></i></a>
             </div>
@@ -82,8 +82,9 @@
                             <td style="text-align: center">{{ $user->name }}</td>
                             <td style="text-align: center">{{ $user->username }}</td>
                             <td style="text-align: center">{{ $user->email }}</td>
-                            <td style="text-align: center"><img src="{{asset('images/'.$user->image)}}" class="user-image"></td>
-                          </tr>
+                              @if($user->image)
+                            <td style="text-align: center"><img src="{{asset('public/images/'.$user->image)}}" class="user-image" height="42" width="42"></td>
+                         @endif </tr>
                         @endforeach
 
                       </tbody>

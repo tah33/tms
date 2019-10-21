@@ -12,7 +12,7 @@
                 <p>Total Teams</p>
               </div>
               <div class="icon">
-                <img src="{{asset('group.png')}}" width="70px" height="70px">
+                <img src="{{asset('public/group.png')}}" width="70px" height="70px">
               </div>
               <a href="{{url('team_list')}}" class="small-box-footer">More info <i class="glyphicon glyphicon-chevron-right"></i></a>
             </div>
@@ -26,7 +26,7 @@
                 <p>Total Projects</p>
               </div>
               <div class="icon">
-                <img src="{{asset('project.svg')}}" width="70px" height="70px">
+                <img src="{{asset('public/project.svg')}}" width="70px" height="70px">
               </div>
               <a href="{{url('project_list')}}" class="small-box-footer">More info <i class="glyphicon glyphicon-chevron-right"></i></a>
             </div>
@@ -40,7 +40,7 @@
                 <p>Pending Projects</p>
               </div>
               <div class="icon">
-                <img src="{{asset('incomplete.svg')}}" width="70px" height="70px">
+                <img src="{{asset('public/incomplete.svg')}}" width="70px" height="70px">
               </div>
               <a href="{{url('incomplete')}}" class="small-box-footer">More info <i class="glyphicon glyphicon-chevron-right"></i></a>
             </div>
@@ -72,7 +72,7 @@
                             <td style="text-align: center">{{ $project->status }}</td>
                           </tr>
                         @endforeach
-                        
+
                       </tbody>
               </table>
             </div>

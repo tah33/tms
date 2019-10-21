@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Member;
 use App\Role;
 use App\Team;
 use App\User;
@@ -10,7 +9,6 @@ use DB;
 use Auth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-
 class MemberController extends Controller
 {
     /**
@@ -99,11 +97,15 @@ class MemberController extends Controller
     public function destroy($id)
     {
         $user=User::find($id);
+        if($user->teams()->exists()) {
+            $leader=$user->teams()->first()->leader_id;
+            $team=Team::where('leader_id',$leader)->first();
+            if($team) {
+                $team->leader_id = null;
+                $team->save();
+            }
+        }
         $user->teams()->detach();
-        /*if($team) {
-            $team->leader_id = null;
-            $team->save();
-        }*/
         return back();
     }
 }

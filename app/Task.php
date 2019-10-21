@@ -11,4 +11,8 @@ class Task extends Model
     {
     	return $this->belongsTo(Project::class);
     }
+    public function getProgressNameAttribute($value)
+    {
+        return ucwords($this->progress);
+    }
 }

@@ -2,31 +2,31 @@
 <html>
 <head>
     <title>TMS</title>
-    <link rel="shortcut icon" href="{{ asset('favicon.jpg') }}">
+    <link rel="shortcut icon" href="{{ asset('public/favicon.jpg') }}">
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.7 -->
-    <link rel="stylesheet" href="../../bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{asset('bower_components/bootstrap/dist/css/bootstrap.min.css')}}">
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="../../bower_components/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="{{asset('bower_components/font-awesome/css/font-awesome.min.css')}}">
     <!-- Ionicons -->
-    <link rel="stylesheet" href="../../bower_components/Ionicons/css/ionicons.min.css">
+    <link rel="stylesheet" href="{{asset('bower_components/Ionicons/css/ionicons.min.css')}}">
     <!-- bootstrap datepicker -->
-    <link rel="stylesheet" href="../../bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
+    <link rel="stylesheet" href="{{asset('bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css')}}">
     <!-- Bootstrap Color Picker -->
-    <link rel="stylesheet" href="../../bower_components/bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css">
+    <link rel="stylesheet" href="{{asset('bower_components/bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css')}}">
     <!-- Select2 -->
-    <link rel="stylesheet" href="../../bower_components/select2/dist/css/select2.min.css">
+    <link rel="stylesheet" href="{{asset('bower_components/select2/dist/css/select2.min.css')}}">
     <!-- Theme style -->
-    <link rel="stylesheet" href="../../dist/css/AdminLTE.min.css">
+    <link rel="stylesheet" href="{{asset('dist/css/AdminLTE.min.css')}}">
     <!-- AdminLTE Skins. Choose a skin from the css/skins
          folder instead of downloading all of them to reduce the load. -->
-    <link rel="stylesheet" href="../../dist/css/skins/_all-skins.min.css">
+    <link rel="stylesheet" href="{{asset('dist/css/skins/_all-skins.min.css')}}">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <script src="{{asset('https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js')}}"></script>
+    <script src="{{asset('https://oss.maxcdn.com/respond/1.4.2/respond.min.js')}}"></script>
     <![endif]-->
     <!-- Google Font -->
     <link rel="stylesheet"
@@ -65,9 +65,9 @@
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               @if(Auth::user()->image == "")
-              <img src="{{asset('images/avatar.png')}}" class="user-image">
+              <img src="{{asset('public/images/avatar.png')}}" class="user-image">
               @else
-              <img src="{{asset('images/'.Auth::user()->image)}}" class="user-image">
+              <img src="{{asset('public/images/'.Auth::user()->image)}}" class="user-image">
               @endif
               <span class="hidden-xs">{{Auth::user()->name}}</span>
             </a>
@@ -75,9 +75,9 @@
               <!-- User image -->
               <li class="user-header">
                   @if(Auth::user()->image =='')
-                      <img src="{{asset('images/avatar.png')}}" class="img-circle">
+                      <img src="{{asset('public/images/avatar.png')}}" class="img-circle">
                   @else
-                      <img src="{{asset('images/'.Auth::user()->image)}}" class="img-circle">
+                      <img src="{{asset('public/images/'.Auth::user()->image)}}" class="img-circle">
                   @endif
                 <p>
                  <br> {{Auth::user()->name}}
@@ -108,9 +108,9 @@
       <div class="user-panel">
         <div class="pull-left image">
           @if(Auth::user()->image =='')
-              <img src="{{asset('images/avatar.png')}}" class="img-circle">
+              <img src="{{asset('public/images/avatar.png')}}" class="img-circle">
               @else
-              <img src="{{asset('images/'.Auth::user()->image)}}" class="img-circle">
+              <img src="{{asset('public/images/'.Auth::user()->image)}}" class="img-circle">
               @endif
         </div>
         <div class="pull-left info">
@@ -127,7 +127,7 @@
             </span>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="{{url('users/create')}}"><i class="fa fa-user-o"></i> Create User</a></li>
+                        <li><a href="{{url('users/create')}}"><i class="fa fa-user-plus"></i> Create User</a></li>
                         @endcan
                         @can('viewAny', App\User::class)
                             <li>
@@ -144,7 +144,7 @@
                 </a>
                 <ul class="treeview-menu">
                     <li><a href="{{url('roles')}}"><i class="fa fa-user-o"></i>Users</a></li>
-                    <li><a href="{{url('permissions')}}"><img src="{{url('roles.svg')}}" height="21" width="21">Roles</a></li>
+                    <li><a href="{{url('permissions')}}"><img src="{{url('public/roles.svg')}}" height="21" width="21">Roles</a></li>
                 </ul>
             </li>
                 @endif
@@ -157,10 +157,10 @@
             </span>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="{{url('teams/create')}}"><img src="{{url('teams.svg')}}" height="21" width="21">Create Team</a></li>
+                        <li><a href="{{url('teams/create')}}"><img src="{{asset('public/teams.svg')}}" height="21" width="21">Create Team</a></li>
                         @endcan
                         @can('viewAny', App\Team::class)
-                            <li><a href="{{url('teams')}}"> <img src="{{url('team.svg')}}" height="21" width="21">Teams</a></li>
+                            <li><a href="{{url('teams')}}"> <img src="{{asset('public/team.svg')}}" height="21" width="21">Teams</a></li>
                         @endcan
                     </ul>
                 </li>
@@ -202,14 +202,14 @@
   <div class="control-sidebar-bg"></div>
 </div>
 <!-- jQuery 3 -->
-<script src="../../bower_components/jquery/dist/jquery.min.js"></script>
+<script src="{{asset('bower_components/jquery/dist/jquery.min.js')}}"></script>
 <!-- Bootstrap 3.3.7 -->
-<script src="../../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="{{asset('bower_components/bootstrap/dist/js/bootstrap.min.js')}}"></script>
 <!-- AdminLTE App -->
-<script src="../../dist/js/adminlte.min.js"></script>
+<script src="{{asset('dist/js/adminlte.min.js')}}"></script>
 <!-- AdminLTE for demo purposes -->
-<script src="../../dist/js/demo.js"></script>
-<script src="../../bower_components/select2/dist/js/select2.full.min.js"></script>
+<script src="{{asset('dist/js/demo.js')}}"></script>
+<script src="{{asset('bower_components/select2/dist/js/select2.full.min.js')}}"></script>
 <script>
     $(function () {
         $(".select2").select2();

@@ -49,7 +49,8 @@ class ProfileController extends Controller
             $file=$request->File('image');
             $ext=$file->getClientOriginalExtension();
             $filename=$user->username . '.' . $ext;
-            unlink('images/'.$user->image);
+            if($user->image)
+                unlink('images/'.$user->image);
             $file->move('images/',$filename);
             $user->image=$filename;
         }
@@ -115,13 +116,15 @@ class ProfileController extends Controller
             return view('admin.home',compact('teams','projects','incomplete'));
         }
         elseif (Auth::user()->hasRole('member')) {
-            $team = $task = $tasks = $project = '';
+            $team = $project_tasks = $tasks = $project = '';
             $team = Team::whereHas('users', function ($query) {
                 $query->where('email', Auth::user()->email);
             })->first();
-            $task = Task::where('member_id', Auth::user())->latest()->first();
-            if ($team)
+            if ($team->projects()->exists()) {
                 $project = Project::where('team_id', $team->id)->latest()->first();
+                if ($project->tasks()->exists())
+                    $project_tasks = Task::where('member_id', Auth::id())->where('project_id',$project->id)->get();
+            }
             if (!empty($team->leader_id)) {
                 $memberlist = $progress = [];
                 if (!empty($project)) {
@@ -136,10 +139,12 @@ class ProfileController extends Controller
                         }
                     }
                 }
-                if ($team->leader_id == Auth::id())
-                    return view('leader.home', compact('team', 'project', 'memberlist', 'tasks', 'progress'));
-                return view('members.home', compact('project', 'team', 'task'));
+                if ($team->leader_id == Auth::id()) {
+                    return view('leader.home', compact('team', 'project', 'memberlist', 'tasks', 'progress'))
+                        ->with('msg', 'You Need to approve some tasks');
+                }
             }
+                return view('members.home', compact('project', 'team', 'project_tasks'));
         }
     }
 

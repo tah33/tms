@@ -2,9 +2,9 @@
 @section('content')
     <center>
         <div class="card" style="width: 18rem;">@if(Auth::user()->image =='')
-                <img class="card-img-top" width="100%" src="{{asset('images/avatar.png')}}" class="img-circle">
+                <img class="card-img-top" width="100%" src="{{asset('public/images/avatar.png')}}" class="img-circle">
             @else
-                <img class="card-img-top" width="100%" src="{{asset('images/'.Auth::user()->image)}}" class="img-circle">
+                <img class="card-img-top" width="100%" src="{{asset('public/images/'.Auth::user()->image)}}" class="img-circle">
             @endif
             <div class="row">
                 <div class="box">

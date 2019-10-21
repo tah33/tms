@@ -1,6 +1,7 @@
 @extends('layouts.app')
 @section('content')
     <center><a href="{{url('teams/create')}}" class="btn btn-success"></i>Add New team</a></center><br>
+    @if(count($teams) > 0)
     <div class="row">
         <div class="box">
             <div class="box-body">
@@ -43,5 +44,7 @@
                 </table>
             </div>
         </div>
-    </div>
+    </div>    @else
+        <h3><div class="alert">Right Now You Have no teams</div></h3>
+    @endif
 @endsection

@@ -26,6 +26,7 @@
                                 <tr>
                                     <th style="text-align: center">Serial</th>
                                     <th style="text-align: center">Name</th>
+                                    <th style="text-align: center">Email</th>
                                     <th style="text-align: center">Action</th>
                                 </tr>
                                 </thead>
@@ -33,7 +34,7 @@
                                 @foreach ($team->users as $key => $user)
                                     <tr>
                                         <td style="text-align: center">{{$key+1}}</td>
-                                        <td style="text-align: center">{{ $user->name }}</td>
+                                        <td style="text-align: center">{{ $user->name }} </td>
                                         <td style="text-align: center">{{ $user->email }}</td>
                                         <td style="text-align: center">
                                             <a class="btn btn-danger"

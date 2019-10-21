@@ -18,8 +18,7 @@ class CheckRole
      */
     public function handle($request, Closure $next)
     {
-        $controllers = [];
-
+      /*  /*$controllers = [];
         foreach (Route::getRoutes()->getRoutes() as $route) {
             $action = $route->getAction();
             if (array_key_exists('uses', $action)) {
@@ -31,6 +30,11 @@ class CheckRole
         }
        // echo Route::getCurrentRoute()->getActionName();
     //    echo $controllers;
-	//	echo $rote_name;
+	//	echo $rote_name;*/
+       // dd (Auth::check()) ;*/
+        if (Auth::guest()) {
+            return redirect('/');
+        }
+        return $next($request);
     }
 }

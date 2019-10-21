@@ -9,7 +9,6 @@
     "license": "MIT",
     "require": {
         "php": "^7.2",
-        "cartalyst/sentinel": "^3.0",
         "codezero/laravel-unique-translation": "^1.2",
         "fideloper/proxy": "^4.0",
         "laravel/framework": "^6.0",

@@ -2,10 +2,10 @@
 @section('content')
     <center>
         @if(empty($team))
-            <h5>Till Now You Are Not A Part of Any Team</h5>
+            <h3>Till Now You Are Not A Part of Any Team</h3>
         @else
         <div class="box-body">
-            <u><h1>Part of Team <font color="green">{{$team->name}}</font></h1></u>
+            <u><h3>Part of Team <font color="green">{{$team->name}}</font></h3></u>
             <div class="card-body">
                 <table>
                     <h5 class="card-title">
@@ -40,28 +40,43 @@
         @if(!empty($project))
         @if(($project->tasks()->exists()))
             <div class="row">
-                <div class="box">
+                <div class="box box-danger" style="width:600px;">
                     <div class="box-body">
-                        <table class="table table-hover table-bordered">
+                        <table class="table table-hover table-bordered" style="width:500px;">
                             <thead>
                             <tr>
+                                <th style="text-align: center">Serial</th>
                                 <th style="text-align: center">Module Name</th>
+                                <th style="text-align: center">Module Requirements</th>
                                 <th style="text-align: center">Progress</th>
                                 <th style="text-align: center">File</th>
-                                <th style="text-align: center">Actions</th>
+                                <th style="text-align: center">Action</th>
                             </tr>
                             </thead>
                             <tbody>
+                            @foreach($project_tasks as $key=> $task)
                             <tr>
+                                <td style="text-align: center">{{ $key+1 }}</td>
                                 <td style="text-align: center">{{ $task->module }}</td>
-                                <td style="text-align: center">{{ $task->progress ==0 ?'Onoing':'Done' }}</td>
-                                <td style="text-align: center"><a
-                                        href="{{url('task-files',$task->id)}}">{{ $task->file }}</a></td>
-                                <td style="text-align: center">@if($task->progress !=  1 && empty($task->progress))
-                                        <a href="{{url('progress',$task->id)}}" onclick="return confirm('Are You sure You want to submit')" class="btn btn-success">Submit</a>
+                                <td style="text-align: center">{{ $task->description }}</td>
+                                <td style="text-align: center">{{ $task->progressname}}</td>
+                                <td style="text-align: center">@if($task->file)
+                                        {{ $task->file }}<a href="{{url('task_download',$task->id)}}"
+                                                            class="btn btn-success"><i
+                                                class="fa fa-download"></i></a>
+                                        <a href="{{url('task_view',$task->id)}}" class="btn btn-primary"><i
+                                                class="fa fa-eye" target="_blank"></i></a></td>@endif</td>
+                                @if($task->progress == "pending")
+                                <td><a href="{{url('pending',$task->id)}}" onclick="return confirm('Are You sure You want to start your work')" class="btn btn-success">Start</a></td>
                                     @endif
-                                </td>
+                                @if($task->progress == "ongoing")
+                                    <td><a href="{{url('ongoing',$task->id)}}" onclick="return confirm('Are You sure You want to submit your work')" class="btn btn-primary">Submit</a></td>
+                                @endif
+                                @if($task->progress == "partial done")
+                                    <td>Wait for your leader confirmation</td>
+                                    @endif
                             </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
