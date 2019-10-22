@@ -21,7 +21,6 @@ class PermissionController extends Controller
     public function create($id)
     {
         $role=Role::find($id);
-        //dd($role->permissions()->exists());
         $creates=Permission::where('name', 'like', '%' . 'create' . '%')->get();
         $views=Permission::where('name', 'like', '%' . 'view' . '%')->get();
         $edits=Permission::where('name', 'like', '%' . 'edit' . '%')->get();

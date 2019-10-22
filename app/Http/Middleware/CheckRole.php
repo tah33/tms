@@ -7,6 +7,7 @@ use App\Role;
 use App\Permission;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Routing\Router;
+use Illuminate\Auth\Middleware\Authenticate as Middleware;
 class CheckRole
 {
     /**
@@ -32,9 +33,9 @@ class CheckRole
     //    echo $controllers;
 	//	echo $rote_name;*/
        // dd (Auth::check()) ;*/
-        if (Auth::guest()) {
+        if (Auth::check())
+            return $next ($request);
+        else
             return redirect('/');
-        }
-        return $next($request);
     }
 }

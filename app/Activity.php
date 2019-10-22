@@ -6,5 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Activity extends Model
 {
-    protected $fillable=['user','login_time','logout_time'];
+    protected $fillable=['login_time','logout_time'];
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

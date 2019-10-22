@@ -15,4 +15,8 @@ class Task extends Model
     {
         return ucwords($this->progress);
     }
+    public function user()
+    {
+        return $this->belongsTo(User::class,'member_id');
+    }
 }

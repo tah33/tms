@@ -9,12 +9,12 @@ class Role extends Model
     protected $fillable = [
         'name'
     ];
-    
+
      public function users()
     {
         return $this->belongsToMany(User::class)->withTimestamps();
     }
-   
+
  	 public function getRoleNameAttribute($value)
     {
         return ucwords($this->name);
@@ -23,9 +23,4 @@ class Role extends Model
     {
         return $this->belongsToMany(Permission::class)->withTimeStamps();
     }
-    public function hasPermission($permission)
-    {
-        return null !== $this->permissions()->whereIn('id', $permission)->first();
-    }
-       
 }

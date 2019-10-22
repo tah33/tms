@@ -60,7 +60,7 @@ class TeamController extends Controller
      */
     public function show($id)
     {
-        $this->authorize('view', Team::class);
+        //$this->authorize('view', Team::class);
         $team=Team::find($id);
         $project="";
         if($team->projects()->exists())

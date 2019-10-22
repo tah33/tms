@@ -49,7 +49,6 @@
             <div class="small-box bg-danger">
               <div class="inner">
                 <h3>{{$incomplete}}</h3>
-
                 <p>Ongoing Projects</p>
               </div>
               <div class="icon">
@@ -105,7 +104,7 @@
                         </tr>
                       </thead>
                    <tbody>
-                           @foreach($activities as $key=> $activity)
+                           @foreach($user->activities as $key=> $activity)
                                <tr>
                                    <td style="text-align: center">{{ $key+1}}</td>
                            <td style="text-align: center">{{ $activity->user_id ? $activity->name : ""}}</td>

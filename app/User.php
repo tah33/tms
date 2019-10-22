@@ -59,5 +59,12 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Team::class)->withTimeStamps();
     }
-
+    public function tasks()
+    {
+        return $this->hasMany(Task::class);
+    }
+    public function activities()
+    {
+        return $this->hasMany(Activity::class);
+    }
 }

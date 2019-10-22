@@ -16,4 +16,11 @@ class Team extends Model
     {
         return $this->belongsToMany(User::class)->withTimeStamps();
     }
+    public function incomplete($status)
+    {
+        if($this->projects()->where('status',$status)->latest()->first())
+            return $this->projects()->latest()->first()->title;
+        else
+            return false;
+    }
 }

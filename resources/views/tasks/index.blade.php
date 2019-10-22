@@ -19,7 +19,7 @@
                     @foreach ($tasks as $key => $task)
                         <tr>
                             <td style="text-align: center">{{ $key+1 }}</td>
-                            <td style="text-align: center">{{ $task->email }}</td>
+                            <td style="text-align: center">{{ $task->user->email }}</td>
                             <td style="text-align: center">{{ $task->module }}</td>
                             <td style="text-align: center">{{ $task->description }}</td>
                             <td style="text-align: center">{{ $task->progressname}}</td>

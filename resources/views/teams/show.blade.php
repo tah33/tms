@@ -40,7 +40,7 @@
                                             <a class="btn btn-danger"
                                                href="{{url('delete-member',$user->id)}}" onclick="return confirm('Are you sure you want to delete?')"><i
                                                     class="fa fa-trash"></i></a>
-                                            @if( $user->id != $team->leader_id)
+                                            @if(! Auth::user()->hasRole('member')  && $user->id != $team->leader_id)
                                                 <a href="{{url('leader',$user->id)}}" class="btn btn-success" onclick="return confirm('Are you sure you want to make him leader?')">Make Leader</a>
                                             @endif
                                         </td>

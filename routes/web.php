@@ -7,7 +7,7 @@ Route::get('/', function(){
 Route::Resource('profiles','ProfileController');
 Route::get('logout','ProfileController@logout');
 Route::post('dashboard','ProfileController@verify');
-Route::get('/home', 'ProfileController@home');
+Route::get('/home', 'ProfileController@home')->middleware('roles');
 //UserController
 Route::resource('users','UserController')->except('delete');
 Route::get('delete-users/{id}','UserController@destroy');
@@ -33,6 +33,11 @@ Route::get('add-projects/{id}','ProjectController@create');
 Route::get('delete-projects/{id}','ProjectController@destroy');
 Route::get('status/{id}','ProjectController@status');
 Route::post('save-projects/{id}','ProjectController@store');
+//files
+Route::Resource('files', 'FileController')->except('create','store');
+Route::get('file_delete/{id}', 'FileController@delete');
+Route::get('file_download/{id}', 'FileController@download');
+Route::get('file_view/{id}', 'FileController@view');
 //TaskController
 Route::Resource('tasks','TaskController')->except('create','store','destroy');
 Route::get('add-task/{id}','TaskController@create');
@@ -50,8 +55,8 @@ Route::get('user_list','SuperController@userList');
 Route::get('project_list','SuperController@projectList');
 Route::get('team_list','SuperController@teamList');
 Route::get('incomplete','SuperController@incompleteList');
-//files
-Route::Resource('files', 'FileController')->except('create','store');
-Route::get('file_delete/{id}', 'FileController@delete');
-Route::get('file_download/{id}', 'FileController@download');
-Route::get('file_view/{id}', 'FileController@view');
+//LeaderController
+Route::get('member_list','LeaderController@memberList');
+Route::get('team_projects/{id}','LeaderController@projectList');
+Route::get('incomplete/{id}','LeaderController@incompleteList');
+Route::get('task_list/{id}','LeaderController@taskList');

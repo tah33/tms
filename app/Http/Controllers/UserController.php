@@ -65,7 +65,7 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        $this->authorize('view', User::class);
+        //$this->authorize('view', User::class);
         $user = User::find($id);
         return view('users.show', compact('user'));
     }

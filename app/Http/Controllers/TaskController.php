@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Activity;
 use App\Task;
 use App\Team;
 use App\Project;
@@ -20,9 +21,7 @@ class TaskController extends Controller
      */
     public function index()
     {
-            $tasks = Task::select('tasks.*','users.email')
-                ->join('users','users.id','tasks.member_id')
-                ->get();
+            $tasks = Task::has('user')->get();
             return view('tasks.index', compact('tasks'));
     }
     /**
@@ -167,7 +166,7 @@ class TaskController extends Controller
         $task->save();
         return back();
     }
-    public function approve()
+/*    public function approve()
     {
         $tasks=Task::select('tasks.*','projects.title','teams.name','users.email')
             ->join('users','tasks.member_id','users.id')
@@ -176,7 +175,7 @@ class TaskController extends Controller
             ->where('teams.leader_id',Auth::id())
             ->where('tasks.progress','partial done')->get();
         return view('leader.approve',compact('tasks'));
-    }
+    }*/
     public function approved($id)
     {
         $task=Task::find($id);
