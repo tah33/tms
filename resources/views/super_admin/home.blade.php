@@ -104,10 +104,10 @@
                         </tr>
                       </thead>
                    <tbody>
-                           @foreach($user->activities as $key=> $activity)
+                           @foreach($activities as $key=> $activity)
                                <tr>
                                    <td style="text-align: center">{{ $key+1}}</td>
-                           <td style="text-align: center">{{ $activity->user_id ? $activity->name : ""}}</td>
+                           <td style="text-align: center">{{  $activity->user->name}}</td>
                            <td style="text-align: center">{{  $activity->login_time }}</td>
                            <td style="text-align: center">{{  $activity->logout_time ? $activity->logout_time : "Online"}}</td>
                                </tr>

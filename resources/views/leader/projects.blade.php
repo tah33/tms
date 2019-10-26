@@ -1,5 +1,22 @@
  @extends('layouts.app')
  @section('content')
+     @if(Auth::user()->hasRole('member'))
+ @section('sidebar')
+     <ul class="sidebar-menu" data-widget="tree">
+         <li class="treeview">
+             <a href="#">
+                 <i class="fa fa-share"></i> <span>Member</span>
+                 <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+             </a>
+             <ul class="treeview-menu">
+                 <li><a href="{{url('add-members',$team->id)}}"><i class="fa fa-user-plus"></i> Add Member</a></li>
+                 <li>
+                     <a href="{{url('team-members',$team->id)}}"><i class="fa fa-users"></i> View Members</a></li>
+             </ul>
+             @stop
+             @endif
  <div class="row">
  <div class="box">
 <div class="box-body">
@@ -24,9 +41,6 @@
                             <td style="text-align: center">{{ $project->requirements }}</td>
                             <td style="text-align: center">{{ $project->status == 0 ?"Incomplete" :"Done" }}</td>
                               <td><a href="{{url('projects',$project->id)}}" class="btn btn-success"><i class="fa fa-eye"></i></a>
-                                  @if($project->tasks()->exists())
-                                  <a href="{{url('task_list',$project->id)}}" class="btn btn-info">Assigned Tasks</a>
-                              @endif
                               </td>
                           </tr>
                         @endforeach

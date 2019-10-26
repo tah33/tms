@@ -1,5 +1,22 @@
 @extends('layouts.app')
 @section('content')
+    @if(Auth::user()->hasRole('member'))
+@section('sidebar')
+    <ul class="sidebar-menu" data-widget="tree">
+        <li class="treeview">
+            <a href="#">
+                <i class="fa fa-share"></i> <span>Member</span>
+                <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+            </a>
+            <ul class="treeview-menu">
+                <li><a href="{{url('add-members',$project->team->id)}}"><i class="fa fa-user-plus"></i> Add Member</a></li>
+                <li>
+                    <a href="{{url('team-members',$project->team->id)}}"><i class="fa fa-users"></i> View Members</a></li>
+            </ul>
+            @stop
+            @endif
     <center>
         <u><h3>Project Details for <font color="green">{{$project->title}}</font></h3></u>
         <div class="box-body">
@@ -73,9 +90,9 @@
     @if(!empty($tasks))
         <center>
             <div class="row">
-                <div class="box box-primary" style="width:700px;">
+                <div class="box box-primary">
                     <div class="box-body">
-                        <table class="table table-hover table-bordered" style="width:600px;">
+                        <table class="table table-hover table-bordered" >
                             <caption>Tasks Assigned for {{$project->title}}</caption>
                             <thead>
                             <tr>

@@ -11,7 +11,8 @@
                           <th style="text-align: center">Team Name</th>
                           <th style="text-align: center">Title</th>
                           <th style="text-align: center">Requirements</th>
-                          <th style="text-align: center">Status</th>
+                            <th style="text-align: center">Status</th>
+                            <th style="text-align: center">Status</th>
                         </tr>
                       </thead>
                       <tbody align="center">

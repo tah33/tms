@@ -23,8 +23,9 @@ Route::get('delete-teams/{id}','TeamController@destroy');
 Route::get('leader/{id}','TeamController@leader');
 Route::get('team_details/{id}','TeamController@team');
 //Member Controller
-Route::Resource('members','MemberController')->except('store','create','destroy');
+Route::Resource('members','MemberController')->except('index','store','create','destroy');
 Route::get('delete-member/{id}','MemberController@destroy');
+Route::get('team-members/{id}', 'MemberController@index');
 Route::get('add-members/{id}','MemberController@create');
 Route::post('save-member/{id}','MemberController@store');
 //ProjectController
@@ -56,7 +57,7 @@ Route::get('project_list','SuperController@projectList');
 Route::get('team_list','SuperController@teamList');
 Route::get('incomplete','SuperController@incompleteList');
 //LeaderController
-Route::get('member_list','LeaderController@memberList');
+Route::get('member_list/{id}','LeaderController@memberList');
 Route::get('team_projects/{id}','LeaderController@projectList');
 Route::get('incomplete/{id}','LeaderController@incompleteList');
 Route::get('task_list/{id}','LeaderController@taskList');

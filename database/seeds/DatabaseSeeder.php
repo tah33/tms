@@ -20,19 +20,19 @@ class DatabaseSeeder extends Seeder
         	'name'=>'Tanvir',
         	'username'=>'tanvir',
         	'email'=>'tanvir@gmail.com',
-        	'password'=>bcrypt('123456'),
+        	'password'=>bcrypt('000000'),
         ]);
        $adminuser= User::create([
             'name'=>'Tanvir Ahmed',
             'username'=>'hera',
             'email'=>'tanvir59@gmail.com',
-            'password'=>bcrypt('123456'),
+            'password'=>bcrypt('000000'),
         ]);
        $memberuser= User::create([
             'name'=>'Tanvir Ahmed Hera',
             'username'=>'hira',
             'email'=>'tanvir1@gmail.com',
-            'password'=>bcrypt('123456'),
+            'password'=>bcrypt('000000'),
         ]);
        $superrole= Role::create([
             'name'=>'super admin',

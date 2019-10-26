@@ -13,10 +13,10 @@ use function foo\func;
 
 class LeaderController extends Controller
 {
-    public function memberList()
+    public function memberList($id)
     {
-        $users=User::all()->except([1,Auth::id()]);
-        return view('leader.users',compact('users'));
+        $team=Team::find($id);
+        return view('leader.users',compact('team'));
     }
     public function projectList($id)
     {
@@ -25,15 +25,15 @@ class LeaderController extends Controller
     }
     public function incompleteList($id)
     {
-        $projects=Project::where('team_id',$id)->where('status',0)->get();
-        return view('leader.incomplete',compact('projects'));
+        $project=Project::where('team_id',$id)->where('status',0)->first();
+        return view('leader.incomplete',compact('project'));
     }
-    public function taskList($id)
+   /* public function taskList($id)
     {
         $project=Project::find($id);
         $tasks=Task::has('user')->whereHas('project',function($query) use ($id){
-            $query->where('id',$id);
+            $query->where('project_id',$id);
         })->get();
         return view('leader.tasks',compact('tasks'));
-    }
+    }*/
 }

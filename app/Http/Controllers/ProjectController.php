@@ -82,8 +82,9 @@ class ProjectController extends Controller
     {
         //$this->authorize('view', Project::class);
         $project=Project::find($id);
-        $tasks=Task::select('tasks.*','users.username')
-            ->join('users','tasks.member_id','users.id')->get();
+        $tasks=Task::whereHas('project',function ($project) use ($id){
+            $project->where('id',$id);
+    })->get();
       return view('projects.show',compact('project','tasks'));
     }
 

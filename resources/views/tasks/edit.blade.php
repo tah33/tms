@@ -1,4 +1,21 @@
 @extends('layouts.app')
+@if(Auth::user()->hasRole('member'))
+@section('sidebar')
+    <ul class="sidebar-menu" data-widget="tree">
+        <li class="treeview">
+            <a href="#">
+                <i class="fa fa-share"></i> <span>Member</span>
+                <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+            </a>
+            <ul class="treeview-menu">
+                <li><a href="{{url('add-members',$task->t_id)}}"><i class="fa fa-user-plus"></i> Add Member</a></li>
+                <li>
+                    <a href="{{url('users')}}"><i class="fa fa-users"></i> View Members</a></li>
+            </ul>
+            @stop
+            @endif
 @section('content')
     <div class="col-md-6">
         <div class="box box-primary">

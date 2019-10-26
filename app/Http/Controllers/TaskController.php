@@ -34,7 +34,7 @@ class TaskController extends Controller
         $user=User::find($id);
         $team=Team::where('id',$user->teams->first()->id)->first();
         $project=Project::where('team_id',$team->id)->latest()->first();
-        return view('tasks.create',compact('user','team','project'));
+        return view('tasks.create',compact('user','project'));
     }
     /**
      * Store a newly created resource in storage.
@@ -91,7 +91,11 @@ class TaskController extends Controller
      */
     public function edit($id)
     {
-        $task=Task::find($id);
+        $task=Task::select('tasks.*','projects.id as p_id','projects.title','teams.name','teams.id as t_id','users.id as u_id','users.email')
+            ->join('users','tasks.member_id','users.id')
+            ->join('projects','projects.id','tasks.project_id')
+            ->join('teams','projects.team_id','teams.id')
+            ->where('tasks.id',$id)->first();
         return view('tasks.edit',compact('task'));
     }
     /**

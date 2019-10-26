@@ -127,7 +127,7 @@
             </span>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="{{url('users/create')}}"><i class="fa fa-user-plus"></i> Create User</a></li>
+                        <li><a href="{{url('')}}"><i class="fa fa-user-plus"></i> Create User</a></li>
                         @endcan
                         @can('viewAny', App\User::class)
                             <li>
@@ -170,8 +170,8 @@
                 @endcan
                 <li><a href="{{url('tasks')}}"><i class="glyphicon glyphicon-tasks"></i> <span>Tasks</span></a></li>
                 @endif
-                @yield('sidebar')
         </ul>
+        @yield('sidebar')
     </section>
     <!-- /.sidebar -->
   </aside>
@@ -210,6 +210,8 @@
 <!-- AdminLTE for demo purposes -->
 <script src="{{asset('dist/js/demo.js')}}"></script>
 <script src="{{asset('bower_components/select2/dist/js/select2.full.min.js')}}"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+<script src="sweetalert2.all.min.js"></script>
 <script>
     $(function () {
         $(".select2").select2();

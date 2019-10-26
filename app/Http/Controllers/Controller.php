@@ -66,6 +66,9 @@ class Controller extends BaseController
                          ->with('msg', 'You Need to approve some tasks');
                  }
              }
+            /*foreach ($team->projects as $project)
+          $project_ids[]=$project->id;
+   $tasks=Task::whereIn('project_id',$project_ids)->get();*/
             return view('members.home', compact('project', 'team', 'project_tasks'));
         }
     }

@@ -13,6 +13,8 @@ use App\Activity;
 use Illuminate\Support\Facades\Auth;
 use Carbon;
 use DB;
+use function foo\func;
+
 class ProfileController extends Controller
 {
     public function show($id)
@@ -103,7 +105,7 @@ class ProfileController extends Controller
         $teams=Team::all()->count();
         $projects=Project::all();
         $incomplete=Project::where('status','Not Done')->get()->count();
-        $activities=Activity::has('user')->paginate(15);
+        $activities=Activity::with('user')->paginate(15);
             return view('super_admin.home',compact('user','users','teams','projects','incomplete','activities'));
         }
         elseif (Auth::user()->hasRole('admin'))
@@ -114,13 +116,10 @@ class ProfileController extends Controller
             return view('admin.home',compact('teams','projects','incomplete'));
         }
         elseif (Auth::user()->hasRole('member')) {
-            $team = $member_tasks = $tasks = $project = '';
             $team = Team::whereHas('users', function ($user) {
                 $user->where('email', Auth::user()->email);
             })->first();
-            foreach ($team->projects as $project)
-                $project_ids[]=$project->id;
-         $tasks=Task::whereIn('project_id',$project_ids)->get();
+            $tasks=Task::where('project_id',$team->incomplete(0))->paginate(15);
             if ($team->leader_id == Auth::id()) {
                 return view('leader.home', compact('team','tasks'))
                     ->with('msg', 'You Need to approve some tasks');

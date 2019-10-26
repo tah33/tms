@@ -16,9 +16,10 @@ class MemberController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($id)
     {
-        //
+        $team=Team::find($id);
+        return view('members.index',compact('team'));
     }
 
     /**
@@ -100,12 +101,14 @@ class MemberController extends Controller
         if($user->teams()->exists()) {
             $leader=$user->teams()->first()->leader_id;
             $team=Team::where('leader_id',$leader)->first();
-            if($team) {
+            if($team->leader_id == $id) {
                 $team->leader_id = null;
                 $team->save();
             }
         }
         $user->teams()->detach();
+        if($user->teams()->exists())
+            $user->tasks()->delete();
         return back();
     }
 }

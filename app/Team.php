@@ -19,7 +19,7 @@ class Team extends Model
     public function incomplete($status)
     {
         if($this->projects()->where('status',$status)->latest()->first())
-            return $this->projects()->latest()->first()->title;
+            return $this->projects()->latest()->first()->id;
         else
             return false;
     }
