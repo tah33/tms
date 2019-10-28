@@ -51,6 +51,7 @@ Route::get('delete-file/{id}', 'TaskController@file');
 Route::get('pending/{id}', 'TaskController@pending');
 Route::get('approve', 'TaskController@approve');
 Route::get('approved/{id}', 'TaskController@approved');
+Route::get('team-task/{id}', 'TaskController@team');
 //SuperController
 Route::get('user_list','SuperController@userList');
 Route::get('project_list','SuperController@projectList');
@@ -61,3 +62,6 @@ Route::get('member_list/{id}','LeaderController@memberList');
 Route::get('team_projects/{id}','LeaderController@projectList');
 Route::get('incomplete/{id}','LeaderController@incompleteList');
 Route::get('task_list/{id}','LeaderController@taskList');
+//MessageController
+Route::get('messages','MessageController@fetch');
+Route::post('messages','MessageController@sent');

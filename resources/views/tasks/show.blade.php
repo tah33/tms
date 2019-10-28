@@ -11,10 +11,14 @@
             </span>
             </a>
             <ul class="treeview-menu">
-                <li><a href="{{url('add-members',$team->id)}}"><i class="fa fa-user-plus"></i> Add Member</a></li>
+                <li><a href="{{url('add-members',$task->t_id)}}"><i class="fa fa-user-plus"></i> Add Member</a></li>
                 <li>
-                    <a href="{{url('team-members',$team->id)}}"><i class="fa fa-users"></i> View Members</a></li>
+                    <a href="{{url('team-members',$task->t_id)}}"><i class="fa fa-users"></i> View Members</a></li>
             </ul>
+        <li>
+            <a href="{{url('team-task',$task->t_id)}}"><i class="fa fa-users"></i> View Tasks</a></li>
+        </li>
+    </ul>
             @stop
             @endif
     <center>

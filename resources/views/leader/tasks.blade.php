@@ -1,6 +1,6 @@
 @extends('layouts.app')
-@section('content')
     @if(Auth::user()->hasRole('member'))
+@section('content')
 @section('sidebar')
     <ul class="sidebar-menu" data-widget="tree">
         <li class="treeview">
@@ -11,17 +11,23 @@
             </span>
             </a>
             <ul class="treeview-menu">
-                <li><a href="{{url('add-members',$team->id)}}"><i class="fa fa-user-plus"></i> Add Member</a></li>
+                <li><a href="{{url('add-members',$tasks->first()->t_id)}}"><i class="fa fa-user-plus"></i> Add Member</a></li>
                 <li>
-                    <a href="{{url('team-members',$team->id)}}"><i class="fa fa-users"></i> View Members</a></li>
+                    <a href="{{url('team-members',$tasks->first()->t_id)}}"><i class="fa fa-users"></i> View Members</a></li>
             </ul>
-            @stop
+        </li>
+        <li>
+            <a href="{{url('tasks',$tasks->first()->t_id)}}"><i class="fa fa-users"></i> View Tasks</a></li>
+        </li>
+    </ul>
+    <!-- /.col -->
+@stop
             @endif
     <div class="row">
         <div class="box">
             <div class="box-body">
                 <table class="table table-hover table-bordered">
-                    <caption>Projects List</caption>
+                    <caption>Task List</caption>
                     <thead>
                     <tr>
                         <th style="text-align: center">No.</th>

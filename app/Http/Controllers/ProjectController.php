@@ -88,25 +88,13 @@ class ProjectController extends Controller
       return view('projects.show',compact('project','tasks'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param \App\Project $project
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
         $this->authorize('update', Project::class);
         $project = Project::find($id);
         return view('projects.edit', compact('project'));
     }
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @param \App\Project $project
-     * @return \Illuminate\Http\Response
-     */
+
     public function update(Request $request,$id)
     {
         {
@@ -141,12 +129,6 @@ class ProjectController extends Controller
             return redirect('projects');
         }
     }
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param \App\Project $project
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         $this->authorize('delete', Project::class);

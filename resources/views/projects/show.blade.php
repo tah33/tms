@@ -15,8 +15,14 @@
                 <li>
                     <a href="{{url('team-members',$project->team->id)}}"><i class="fa fa-users"></i> View Members</a></li>
             </ul>
-            @stop
-            @endif
+        </li>
+        <li>
+            <a href="{{url('team-task',$project->team->id)}}"><i class="fa fa-users"></i> View Tasks</a></li>
+        </li>
+    </ul>
+    <!-- /.col -->
+@stop
+@endif
     <center>
         <u><h3>Project Details for <font color="green">{{$project->title}}</font></h3></u>
         <div class="box-body">

@@ -116,16 +116,20 @@ class ProfileController extends Controller
             return view('admin.home',compact('teams','projects','incomplete'));
         }
         elseif (Auth::user()->hasRole('member')) {
+            $team=$project=$tasks='';
+            $progresslist=[];
             $team = Team::whereHas('users', function ($user) {
                 $user->where('email', Auth::user()->email);
             })->first();
+            $project=Project::where('team_id',$team->id)->where('status',0)->first();
             $tasks=Task::where('project_id',$team->incomplete(0))->paginate(15);
+            foreach($tasks as $task)
+                $progresslist[]=$task->progress;
             if ($team->leader_id == Auth::id()) {
-                return view('leader.home', compact('team','tasks'))
+                return view('leader.home', compact('team','tasks','project','progresslist'))
                     ->with('msg', 'You Need to approve some tasks');
             }
-                return view('members.home', compact('project', 'team', 'project_tasks'));
+                return view('members.home', compact( 'team','tasks','project'));
         }
     }
-
 }

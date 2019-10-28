@@ -6,6 +6,7 @@ use App\Project;
 use App\Task;
 use App\User;
 use App\Team;
+use DB;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;

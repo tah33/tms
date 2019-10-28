@@ -1,5 +1,6 @@
 @extends('layouts.app')
-@if(Auth::user()->hasRole('member'))
+@section('content')
+    @if(Auth::user()->hasRole('member'))
 @section('sidebar')
     <ul class="sidebar-menu" data-widget="tree">
         <li class="treeview">
@@ -10,13 +11,18 @@
             </span>
             </a>
             <ul class="treeview-menu">
-                <li><a href="{{url('add-members',$user->teams()->first()->id)}}"><i class="fa fa-user-plus"></i> Add Member</a></li>
+                <li><a href="{{url('add-members',$user->teams->first()->id)}}"><i class="fa fa-user-plus"></i> Add Member</a></li>
                 <li>
-                    <a href="{{url('users')}}"><i class="fa fa-users"></i> View Members</a></li>
+                    <a href="{{url('team-members',$user->teams->first()->id)}}"><i class="fa fa-users"></i> View Members</a></li>
             </ul>
-            @stop
-            @endif
-@section('content')
+        </li>
+        <li>
+            <a href="{{url('team-task',$user->teams->first()->id)}}"><i class="fa fa-users"></i> View Tasks</a></li>
+        </li>
+    </ul>
+    <!-- /.col -->
+@stop
+@endif
     <center>
     <div class="card" style="width: 18rem;">
         @if($user->image =='')

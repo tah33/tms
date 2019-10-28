@@ -15,7 +15,7 @@
                             <td> {{$team->name}}</td>
                         </tr>
                     </h5>
-                    @if(!empty($project))
+                    @if(($team->projects()->exists()))
                         <h5 class="card-title">
                             <tr>
                                 <td>Project Title</td>
@@ -40,9 +40,9 @@
         @if(!empty($project))
         @if(($project->tasks()->exists()))
             <div class="row">
-                <div class="box box-danger" style="width:600px;">
+                <div class="box box-danger">
                     <div class="box-body">
-                        <table class="table table-hover table-bordered" style="width:500px;">
+                        <table class="table table-hover table-bordered">
                             <thead>
                             <tr>
                                 <th style="text-align: center">Serial</th>
@@ -54,7 +54,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach($project_tasks as $key=> $task)
+                            @foreach($project->tasks as $key=> $task)
                             <tr>
                                 <td style="text-align: center">{{ $key+1 }}</td>
                                 <td style="text-align: center">{{ $task->module }}</td>
