@@ -11,13 +11,13 @@
             </span>
             </a>
             <ul class="treeview-menu">
-                <li><a href="{{url('add-members',$tasks->first()->t_id)}}"><i class="fa fa-user-plus"></i> Add Member</a></li>
+                <li><a href="{{url('add-members',Auth::user()->teams->first()->id)}}"><i class="fa fa-user-plus"></i> Add Member</a></li>
                 <li>
-                    <a href="{{url('team-members',$tasks->first()->t_id)}}"><i class="fa fa-users"></i> View Members</a></li>
+                    <a href="{{url('team-members',Auth::user()->teams->first()->id)}}"><i class="fa fa-users"></i> View Members</a></li>
             </ul>
         </li>
         <li>
-            <a href="{{url('tasks',$tasks->first()->t_id)}}"><i class="fa fa-users"></i> View Tasks</a></li>
+            <a href="{{url('tasks',Auth::user()->teams->first()->id)}}"><i class="fa fa-users"></i> View Tasks</a></li>
         </li>
     </ul>
     <!-- /.col -->
