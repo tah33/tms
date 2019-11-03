@@ -80,6 +80,40 @@
             </div>
         </div>
     </div>
+    @if(!empty($project))
+    <div class="row">
+        <div class="box">
+            <div class="box-body">
+                <table class="table table-hover table-bordered">
+                    <caption>Ongoing Project</caption>
+                    <thead>
+                    <tr>
+                        <th style="text-align: center">Title</th>
+                        <th style="text-align: center">Rerements</th>
+                        <th style="text-align: center">Status</th>
+                        <th style="text-align: center">Action</th>
+                    </tr>
+                    </thead>
+                    <tbody align="center">
+                    <tr>
+                        <td style="text-align: center">{{ $project->title }}</td>
+                        <td style="text-align: center">{{ $project->requirements }}</td>
+                        <td style="text-align: center">{{ $project->status == 0 ? "Ongoing" : "Done"}}</td>
+                        <td style="text-align: center"><a href="{{url('projects',$project->id)}}" class="btn btn-primary"><i class="fa fa-eye"></i></a>
+                            @if($project->status != 1 || empty($project->status))
+                                @if (array_unique($progresslist) === array("done"))
+                                <a href="{{url('status',$project->id)}}"
+                                   class="btn btn-primary"
+                                   onclick="return confirm('Are You Sure! You want to Submit?')">Submit</a>
+                                @endif
+                            @endif
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
     @if(count($project->tasks) > 0 && $project->tasks()->exists())
         <div class="box">
             <div class="box-body">
@@ -122,11 +156,9 @@
                 {{$tasks->links()}}
             </div>
         </div>
-
-
     @endif
-
 </div>
+@endif
 @push('script-file')
     <style>
         .confarmmessage{

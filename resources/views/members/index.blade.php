@@ -32,7 +32,9 @@
                             <tr>
                                 <th style="text-align: center">No.</th>
                                 <th style="text-align: center">Name</th>
+                                @if(Auth::id() == $team->leader_id)
                                 <th style="text-align: center">Action</th>
+                                    @endif
                             </tr>
                             </thead>
                             <tbody align="center">
@@ -40,6 +42,7 @@
                                 <tr>
                                     <td style="text-align: center">{{ $key+1 }}</td>
                                     <td style="text-align: center">{{ $user->email }}</td>
+                                    @if(Auth::id() == $team->leader_id)
                                     <td style="text-align: center">
                                             <a href="{{url('users',$user->id)}}" class="btn btn-success"><i
                                                     class="fa fa-eye"></i></a>
@@ -47,6 +50,7 @@
                                                onclick="return confirm('Are you sure you want to delete?')"
                                                class="btn btn-danger remove"><i class="fa fa-trash"></i></a>
                                     </td>
+                                        @endif
                                 </tr>
                             @endforeach
                             </tbody>

@@ -43,7 +43,15 @@
                         <td style="text-align: center">{{ $project->title }}</td>
                         <td style="text-align: center">{{ $project->requirements }}</td>
                         <td style="text-align: center">{{ $project->status == 0 ? "Ongoing" : "Done"}}</td>
-                        <td style="text-align: center"><a href="{{url('projects',$project->id)}}" class="btn btn-primary"><i class="fa fa-eye"></i></a></td>
+                        <td style="text-align: center"><a href="{{url('projects',$project->id)}}" class="btn btn-primary"><i class="fa fa-eye"></i></a>
+                            @if($project->status != 1 || empty($project->status))
+                                @if (array_unique($progress) === array("done")) {
+                                <a href="{{url('status',$project->id)}}"
+                                   class="btn btn-primary"
+                                   onclick="return confirm('Are You Sure! You want to Submit?')">Submit</a>
+                                @endif
+                                @endif
+                        </td>
                     </tr>
                     </tbody>
                 </table>

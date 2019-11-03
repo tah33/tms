@@ -8,6 +8,8 @@ Route::Resource('profiles','ProfileController');
 Route::get('logout','ProfileController@logout');
 Route::post('dashboard','ProfileController@verify');
 Route::get('/home', 'ProfileController@home')->middleware('roles');
+Route::get('/password', 'ProfileController@resetPassword');
+Route::post('/change-password/{id}', 'ProfileController@password');
 //UserController
 Route::resource('users','UserController')->except('delete');
 Route::get('delete-users/{id}','UserController@destroy');
@@ -52,6 +54,7 @@ Route::get('pending/{id}', 'TaskController@pending');
 Route::get('approve', 'TaskController@approve');
 Route::get('approved/{id}', 'TaskController@approved');
 Route::get('team-task/{id}', 'TaskController@team');
+Route::post('feedback/{id}', 'TaskController@feedback');
 //SuperController
 Route::get('user_list','SuperController@userList');
 Route::get('project_list','SuperController@projectList');

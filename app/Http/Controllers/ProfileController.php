@@ -27,22 +27,14 @@ class ProfileController extends Controller
         $user=User::find($id);
         return view('profiles.edit',compact('user'));
     }
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function update(Request $request, $id)
     {
         $request->validate([
-            'name'=>'required',
-            'username'=>'required|unique:users,username,'.$id,
-            'email'=>'required|unique:users,email,'.$id,
-            'password' => 'nullable|confirmed|min:6',
-            'old' => 'required_with:password',
-        ]);
+        'name'=>'required',
+        'username'=>'required|unique:users,username,'.$id,
+        'email'=>'required|unique:users,email,'.$id,
+    ]);
         $user = User::find($id);
         $user->name = $request->name;
         $user->username = $request->username;
@@ -56,6 +48,28 @@ class ProfileController extends Controller
             $file->move('images/',$filename);
             $user->image=$filename;
         }
+        /*if($request->password){
+            $password=$request->old;
+            if (Hash::check($request->old, $user->password)) {
+                $user->password = bcrypt($request->password);
+            }
+            else
+                return redirect()->back()->with("error","your current password does not match with the password you provided. please try again.");
+        }*/
+        $user->save();
+        return redirect('home');
+    }
+    public function resetPassword()
+    {
+        return view('profiles.reset-password');
+    }
+    public function password(Request $request,$id)
+    {
+        $request->validate([
+        'password' => 'nullable|confirmed|min:6',
+        'old' => 'required_with:password',
+        ]);
+        $user = User::find($id);
         if($request->password){
             $password=$request->old;
             if (Hash::check($request->old, $user->password)) {

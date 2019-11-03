@@ -1,5 +1,16 @@
 @extends('layouts.app')
 @section('content')
+@section('sidebar')
+    <ul class="sidebar-menu" data-widget="tree">
+        <li class="treeview">
+                <li>
+                    <a href="{{url('team-members',$team->id)}}"><i class="fa fa-users"></i> Team Members</a></li>
+        <li>
+            <a href="{{url('team-task',$team->id)}}"><i class="fa fa-users"></i> View Tasks</a></li>
+        </li>
+    </ul>
+    <!-- /.col -->
+@stop
     <center>
         @if(empty($team))
             <h3>Till Now You Are Not A Part of Any Team</h3>

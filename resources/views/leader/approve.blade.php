@@ -25,6 +25,20 @@
     <!-- /.col -->
 @stop
 @endif
+<style>
+    form {
+        padding: 15px;
+        border: 1px solid #666;
+        background: #fff;
+        display: none;
+    }
+
+    #formButton {
+        display: block;
+        margin-right: auto;
+        margin-left: auto;
+    }
+</style>
 <div class="row">
     <div class="box">
         <div class="box-body">
@@ -51,7 +65,15 @@
                         <td style="text-align: center">{{ $task->description }}</td>
                         <td style="text-align: center"><a href="{{url('approved',$task->id)}}" class="btn btn-success"
                                                           onclick="return confirm('Are you sure, you want to accept this works')">Approve</a>
-                            <a href="{{url('rejected',$task->id)}}" class="btn btn-danger">Reject</a>
+                            <button type="button" style="float: left;" id="formButton" class="btn btn-danger">Reject</button>
+                            <form id="form1" method="post" action="{{url('feedback',$task->id)}}">@csrf
+                                <p style="color: #0c5460">Please leave a comment for rejecting this work</p>
+                                <b>Comment:</b>
+                                <br>
+                                <textarea name="comment" rows="2" cols="50" placeholder="Enter Your Comment Here"></textarea>
+                                <br><br>
+                                <input type="submit" id="submit"></input>
+                            </form>
                         </td>
                     </tr>
                 @endforeach

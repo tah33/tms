@@ -43,28 +43,7 @@
                                     </span>
                             @enderror
                         </div>
-                        <div class="form-group">
-                            <input id="old-password" type="password" class="form-control" name="old" placeholder="Old Password...">
-                            @error('old')
-                            <span class="invalid-feedback" role="alert">
-                                        <strong><font color="red">{{ $message }}</font></strong>
-                                    </span>
-                            @enderror
-                        <font color="red">{{Session::get('error')}}</font>
-                        </div>
-                        <div class="form-group">
-                            <input id="password" type="password"
-                                   class="form-control @error('password') is-invalid @enderror"
-                                   name="password" placeholder="Change Password">
-                            @error('password')
-                            <span class="invalid-feedback" role="alert">
-                                        <strong><font color="red">{{ $message }}</font></strong>
-                                    </span>
-                            @enderror
-                        </div>
-                        <div class="form-group">
-                            <input id="password-confirm" type="password" class="form-control" name="password_confirmation" placeholder="Confirm Password...">
-                        </div>
+
                         <div class="col-lg-12 input-group control-group increment">
                             <input type="file" name="image"
                                    class="form-control @error('image') is-invalid @enderror" accept="image/*">

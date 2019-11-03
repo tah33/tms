@@ -160,15 +160,21 @@ class TaskController extends Controller
     }
     public function team($id)
     {
-        $tasks=Task::select('tasks.*','projects.title','teams.name','users.email','teams.id as t_id')
+        $tasks=Task::select('tasks.*','projects.title','teams.name','users.email','teams.id')
             ->join('users','tasks.member_id','users.id')
             ->join('projects','projects.id','tasks.project_id')
             ->join('teams','projects.team_id','teams.id')
-            ->where('teams.leader_id',Auth::id())
+            ->where('teams.id',$id)
             ->where('tasks.progress','pending')
             ->orwhere('tasks.progress','ongoing')->get();
         return view('leader.tasks',compact('tasks'));
     }
-
-
+    public function feedback(Request $request,$id)
+    {
+        $task=Task::find($id);
+        $task->progress="ongoing";
+        $task->comment=$request->comment;
+        $task->save();
+        return redirect('home');
+    }
 }
